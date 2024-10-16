@@ -13,3 +13,5 @@ Evaluation
 - Cooperativeness -> Qual é percentagem de interações cooperativas ao longo das epochs
 - Population mix
 - (Imperfection on information) w/ sampling (5%)
+
+Should we plot fitness distribution?
