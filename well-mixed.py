@@ -3,6 +3,7 @@ import random
 import matplotlib.pyplot as plt
 from random import uniform
 from collections import Counter
+from tqdm import tqdm
 
 # Parameters
 N = 50 # Number of nodes
@@ -48,9 +49,9 @@ def init(f_coop, f_def, f_disc, p_inf):
 
     # Initialization of variables
     nodes = np.random.choice([COOPERATOR, DEFECTOR, DISCRIMINATOR], size=N, p=[f_coop, f_def, f_disc])
-    fitness = np.full((nodes), initial_fitness, dtype=np.float64)
-    standing = np.ones(nodes, dtype=np.bool_)
-    reputation = np.ones((nodes, nodes), dtype=np.bool_)
+    fitness = np.full(N, initial_fitness, dtype=np.float64)
+    standing = np.ones(N, dtype=np.bool_)
+    reputation = np.ones((N, N), dtype=np.bool_)
 
     # Simulation results initialization
     epoch_total_fitness = np.empty(T, dtype=np.float64)
@@ -90,8 +91,8 @@ def update_rep(observer, node1, node2, dec1, dec2, prob_obs):
     reputation[observer, node2] = dec2 ^ good1
 
 def interaction(node1, node2):
-    dec1 = decision(node1, node2, perfect_inf)
-    dec2 = decision(node2, node1, perfect_inf)
+    dec1 = decision(node1, node2)
+    dec2 = decision(node2, node1)
 
     ret = 0
     # Fitness
@@ -134,7 +135,8 @@ def interaction(node1, node2):
     new_rep2_2 = dec2 ^ good2_1
     ## Apply update to all nodes with the given probability
     update_observer_rep = lambda observer: update_rep(observer, node1, node2, dec1, dec2, info_prop)
-    update_observer_rep(reputation)
+    for i in range(N):
+        update_observer_rep(i)
     ## Update the interacting nodes' reputation
     reputation[node1, node1] = new_rep1_1
     reputation[node1, node2] = new_rep1_2
@@ -172,4 +174,7 @@ def run_sim(f_coop, f_def, f_disc, perfect_info):
     res_cooperators = np.add(res_cooperators, epoch_cooperators)
     res_defectors = np.add(res_defectors, epoch_defectors)
     res_discriminators = np.add(res_discriminators, epoch_discriminators)
+
+for _ in tqdm(range(num_simulations)):
+    run_sim(0.33, 0.33, 0.34, True)
     
