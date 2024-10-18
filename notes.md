@@ -15,3 +15,14 @@ Evaluation
 - (Imperfection on information) w/ sampling (5%)
 
 Should we plot fitness distribution?
+
+Mix 33%
+
+Networks:
+    - 3 types: Small-world, scale free and random
+
+Strategies:
+    - Stern Judging
+    - Simple Standing
+    - Shunning
+    - Image Scoring
