@@ -26,3 +26,5 @@ Strategies:
     - Simple Standing
     - Shunning
     - Image Scoring
+
+Change well-mixed filenames to use function (as in networks)
